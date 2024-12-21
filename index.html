@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nos Applications Premium</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+    .app-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+    .app-item {
+      border: 1px solid #ddd;
+      padding: 20px;
+      width: 200px;
+      text-align: center;
+    }
+    .app-item img {
+      max-width: 100%;
+      height: auto;
+    }
+    .app-item button {
+      padding: 10px 15px;
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    .app-item button:hover {
+      background-color: #0056b3;
+    }
+  </style>
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-HFQ260QWNF"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'YOUR_GA_TRACKING_ID');
+  </script>
+</head>
+<body>
+  <h1>Nos Applications Premium</h1>
+  <div class="app-list">
+    <div class="app-item" data-app-name="App 1" data-app-price="19.99">
+      <img src="app1.png" alt="App 1">
+      <h2>App 1</h2>
+      <p>Description de l'App 1</p>
+      <button onclick="trackPurchase('App 1', 19.99)">Acheter</button>
+    </div>
+    <div class="app-item" data-app-name="App 2" data-app-price="29.99">
+      <img src="app2.png" alt="App 2">
+      <h2>App 2</h2>
+      <p>Description de l'App 2</p>
+      <button onclick="trackPurchase('App 2', 29.99)">Acheter</button>
+    </div>
+    <!-- Ajoutez plus d'applications ici -->
+  </div>
+
+  <script>
+    function trackPurchase(appName, price) {
+      gtag('event', 'purchase', {
+        event_category: 'ecommerce',
+        event_label: appName,
+        value: price
+      });
+      alert(`Achat de ${appName} pour ${price} € enregistré.`);
+    }
+
+    document.querySelectorAll('.app-item').forEach(item => {
+      item.addEventListener('click', function(event) {
+        if (event.target.tagName !== 'BUTTON') {
+          const appName = item.getAttribute('data-app-name');
+          gtag('event', 'click', {
+            event_category: 'app',
+            event_label: appName
+          });
+        }
+      });
+    });
+  </script>
+</body>
+</html>
